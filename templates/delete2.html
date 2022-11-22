@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2 class="m-5" style="text-align: center;">Goodbye!!</h2>
+<div class="card w-50 mb-3" style="margin: auto;">
+    <div class="card-body">
+        <canvas id="main" width="750" height="400" style="background:#000;"></canvas>
+        <!--canvasの下にscriptを読み込まないとエラーがでる-->
+        <!-- <script src="delete2.js"></script> -->
+        <script src="{{ url_for('static', filename='js/delete2.js') }}"></script>
+        <div class="pt-2">
+            <a class="btn btn-outline-success" href="/" role="button">Miss...</a>
+            <a class="btn btn-success" href="/delete/{{ post.id }}" role="button">Goodbye!!</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

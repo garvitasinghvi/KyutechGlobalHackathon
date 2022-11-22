@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+:root {
+    --drop-size: 100px;
+    --drop-radius: 100px;
+}
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    justify-content: center;
+}
+@keyframes shake1 {
+    0% {
+    transform: translate(0, 0);
+    }
+    25% {
+    transform: translate(0, 3px);
+    }
+    50% {
+    transform: translate(0, 0);
+    }
+    75% {
+    transform: translate(0, -3px);
+    }
+    100% {
+    transform: translate(0, 0);
+    }
+}
+@keyframes shake2 {
+    0% {
+    transform: translate(0, 0);
+    }
+    25% {
+    transform: translate(0, 5px);
+    }
+    50% {
+    transform: translate(0, 0);
+    }
+    75% {
+    transform: translate(0, -5px);
+    }
+    100% {
+    transform: translate(0, 0);
+    }
+}
+
+@keyframes explosion-shadow {
+    0% {
+    filter: drop-shadow(0 0 0 0 white);
+    }
+    50% {
+    filter: drop-shadow(
+        var(--drop-size) var(--drop-size) var(--drop-radius) red
+        )
+        drop-shadow(
+        var(--drop-size) calc(-1 * var(--drop-size)) var(--drop-radius)
+            yellow
+        )
+        drop-shadow(
+        calc(-1 * var(--drop-size)) var(--drop-size) var(--drop-radius)
+            yellow
+        )
+        drop-shadow(
+        calc(-1 * var(--drop-size)) calc(-1 * var(--drop-size))
+            var(--drop-radius) red
+        );
+    }
+    100% {
+    filter: drop-shadow(
+        var(--drop-size) var(--drop-size) var(--drop-radius) white
+            /* var(--drop-color) */
+        )
+        drop-shadow(
+        var(--drop-size) calc(-1 * var(--drop-size)) var(--drop-radius)
+            white
+        )
+        drop-shadow(
+        calc(-1 * var(--drop-size)) var(--drop-size) var(--drop-radius)
+            white
+        )
+        drop-shadow(
+        calc(-1 * var(--drop-size)) calc(-1 * var(--drop-size))
+            var(--drop-radius) /* var(--drop-color) */ white
+        );
+    }
+}
+@keyframes explosion {
+    0% {
+    }
+    30% {
+    filter: hue-rotate(-50deg) contrast(100%);
+    }
+    100% {
+    filter: hue-rotate(-50deg) contrast(100%) brightness(10);
+    }
+}
+.target {
+    font-size: 30vmin;
+    cursor: pointer;
+}
+.exp-hue:hover {
+    animation: shake1 0.1s infinite, shake2 0.1s 2s infinite;
+}
+.exp-light:hover {
+    animation: explosion 7s 1 forwards;
+}
+.exp-shadow:hover {
+    animation: explosion-shadow 5s 1s;
+}
+.exp-scale:hover {
+    transform: scale(200%);
+    transition: 3s;
+    transition-delay: 3s;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<h2 class="m-5" style="text-align: center;">Goodbye!!</h2>
+<div class="container">
+<div class="exp-scale">
+    <div class="exp-shadow">
+    <div class="exp-light">
+        <div class="exp-hue">
+        <div class="target">{{ post.title }}</div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+<div class="card w-50 mb-3" style="margin: auto;">
+    <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <div class="pt-2">
+            <a class="btn btn-outline-success" href="/" role="button">Miss...</a>
+            <a class="btn btn-success" href="/delete/{{ post.id }}" role="button">Goodbye!!</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

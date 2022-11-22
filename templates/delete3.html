@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2 class="m-5" style="text-align: center;">Goodbye!!</h2>
+<div class="card w-50 mb-3" style="margin: auto;">
+    <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <div class="pt-2">
+            <a class="btn btn-outline-success" href="/" role="button">Miss...</a>
+            <a class="btn btn-success" href="/delete/{{ post.id }}" role="button">Goodbye!!</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
