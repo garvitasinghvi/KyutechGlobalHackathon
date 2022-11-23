@@ -151,7 +151,7 @@ var mg = setInterval(draw,10)    //10ミリ秒単位で実行
 function game_over(){
     ctx.font = "50px UTF-8"
     ctx.fillStyle="#ffff00"
-    ctx.fillText(p+ " complaints are gone!",10,200)
+    ctx.fillText(p+"%"+" relaxed!",200,200)
 }
 
 //enemyをランダムな座標に作る

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/animation.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/animation.css') }}"> -->
 <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
 {% endblock %}
 
@@ -15,8 +15,6 @@
             <a class="btn btn-outline-success btn-sm" href="/update/{{ post.id }}" role="button">Update</a>
             <a class="btn btn-outline-danger btn-sm" href="/delete1/{{ post.id }}" role="button">Delete1</a>
             <a class="btn btn-outline-danger btn-sm" href="/delete2/{{ post.id }}" role="button">Delete2</a>
-            <a class="btn btn-outline-danger btn-sm" href="/delete3/{{ post.id }}" role="button">Delete3</a>
-            
         </div>
     </div>
     {% endfor %}
