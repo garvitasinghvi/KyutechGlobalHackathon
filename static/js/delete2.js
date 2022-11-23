@@ -18,6 +18,11 @@ var ex = [0];
 var ey = [0];
 var es = 36
 
+//fireの座標
+var fx = [0];
+var fy = [0];
+var fs = [0]; //fps?
+
 var p = 0; //点数（ポイント）
 
 var kt = new Date(); //時間
@@ -25,8 +30,7 @@ var kt = new Date(); //時間
 //playerを描く関数
 function player_draw(){
     var player_img = new Image()
-    player_img.src="../img/player.png"
-    // player_img.src = "{{url_for('static',img/player.png)}}"
+    player_img.src="/static/images/player.png"
     ctx.drawImage(player_img,px,py,ps,ps)
 }
 
@@ -42,9 +46,8 @@ function l_draw(){
 function e_draw(){
     for(var i = 0;i < ex.length;i++){
         var enemy_img = new Image()
-        enemy_img.src = "../img/enemy.png"
-        // enemy_img.src = "{{url_for('static',img/enemy.png)}}"
-        ctx.drawImage(enemy_img,ex[i],ey[i],es,es)
+        enemy_img.src = "/static/images/enemy.png"
+        ctx.drawImage(enemy_img,ex[i],ey[i],enemy_img.naturalWidth,enemy_img.naturalHeight)
     }
 }
 function p_draw(){
@@ -52,6 +55,21 @@ function p_draw(){
     ctx.fillStyle="#ffff00"
     ctx.fillText(p,0,35)
 }
+function f_draw(){ //引数に座標位置を受け取る
+    for(var i = 0;i < fx.length;i++){
+        var fire_img = new Image()
+        fire_img.src = "/static/images/fire.png"
+        ctx.drawImage(fire_img,fx[i],fy[i],fire_img.naturalWidth,fire_img.naturalHeight)
+        fs[i]--;
+        if(fs[i]==0){
+            fx.splice(l_return[1],1)
+            fy.splice(l_return[1],1)
+            fs.splice(i,1)
+        } 
+    }
+    
+}
+
 
 function l_collision(){
     var collision = false   //衝突したか
@@ -73,10 +91,14 @@ document.onkeydown = function(e){
     if(e.key == "ArrowUp"){  //↑
         p_dx = 0
         p_dy = -3
+        lx.push(px)    //レーザー発射開始位置(playerの位置)をリストに追加
+        ly.push(py)
     }
     if(e.key == "ArrowDown"){//↓
         p_dx = 0
         p_dy = 3
+        lx.push(px)    //レーザー発射開始位置(playerの位置)をリストに追加
+        ly.push(py)
     }
     if(e.key == " "){
         lx.push(px)    //レーザー発射開始位置(playerの位置)をリストに追加
@@ -96,9 +118,13 @@ function draw(){
     l_draw()
     e_draw()
     p_draw()
+    f_draw()
     var l_return = l_collision()   //衝突した個体番号などをl_returnに収納
     if(l_return[0]){
-        //ぶつかった個体を削除する(リストから削除する)
+        //ぶつかった個体を削除する(リストから削除する)!!!!!!!!!!!!
+        fx.push(ex[l_return[1]])
+        fy.push(ey[l_return[1]])
+        fs.push(60)
         ex.splice(l_return[1],1)
         ey.splice(l_return[1],1)
     }
@@ -111,7 +137,7 @@ function draw(){
     }
 
     var t = new Date(); //今の時間（ミリ秒）を取得 
-    if(t.getTime()-kt.getTime() >=10000){ //今の時間 >= 6秒
+    if(t.getTime()-kt.getTime() >=10000){ //今の時間 >= 10秒
         clearInterval(mg)
         game_over()
     }
@@ -125,7 +151,7 @@ var mg = setInterval(draw,10)    //10ミリ秒単位で実行
 function game_over(){
     ctx.font = "50px UTF-8"
     ctx.fillStyle="#ffff00"
-    ctx.fillText("得点は"+p+"点です！",200,200)
+    ctx.fillText(p+ " complaints are gone!",10,200)
 }
 
 //enemyをランダムな座標に作る
@@ -133,6 +159,6 @@ function e_make(){
     ex.push(700)
     ey.push(Math.floor(Math.random()*370)) //0~369
 }
-setInterval(e_make,1500) //1.5秒おきに実行
+setInterval(e_make,150) //n[ms]おきに実行
 
 draw();
